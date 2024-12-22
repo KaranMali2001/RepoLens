@@ -36,7 +36,7 @@ async def get_user(db: AsyncSession, clerk_id: str):
         result = await db.execute(select(Users).where(Users.clerk_id == clerk_id))
         print("result from get_userrrr", result)
         user = result.scalar_one_or_none()
-        
+
         return user
     except Exception as e:
         print("Error getting user:", e)

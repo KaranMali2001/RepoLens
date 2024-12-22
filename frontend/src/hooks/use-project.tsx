@@ -10,18 +10,13 @@ export default function useProject() {
     error,
     isLoading,
   } = useQuery<ProjectType[]>({
-    queryKey: ["projects"],
+    queryKey: ["projects", "persist"],
     queryFn: fetchProjects,
-    staleTime: 5 * 60 * 1000,
-    gcTime: 5 * 60 * 1000,
-    retry: 2,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
+    staleTime: Infinity,
   });
   const [selectedProjectId, setSelectedProjectId] = useLocalStorage(
     "project 1",
-    0
+    0,
   );
   const project = projects?.find((project) => project.id === selectedProjectId);
   console.log("data from use Project hoojk", projects); //data.data

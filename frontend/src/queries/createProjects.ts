@@ -17,7 +17,7 @@ export async function createProjects(reqData: ProjectType) {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     return res.status === 200 ? res.data : null;
@@ -27,7 +27,7 @@ export async function createProjects(reqData: ProjectType) {
     }
 
     throw new Error(
-      error instanceof Error ? error.message : "An unknown error occurred"
+      error instanceof Error ? error.message : "An unknown error occurred",
     );
   }
 }

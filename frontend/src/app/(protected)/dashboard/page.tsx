@@ -1,23 +1,19 @@
-import { currentUser } from "@clerk/nextjs/server";
-import Image from "next/image";
+import ActivityFeed from "@/components/dashboard/activity-feed";
+import { MeetingCard } from "@/components/dashboard/meeting-card";
+import { QuestionCard } from "@/components/dashboard/question-card";
+import { TopBar } from "@/components/dashboard/top-bar";
 
-export default async function Page() {
-  const user = await currentUser();
-  if (!user) {
-    return <div>User not found</div>;
-  }
+export default function DashboardPage() {
   return (
-    <div>
-      User ID: {user?.id} <br />
-      <Image
-        src={user?.imageUrl || ""}
-        alt="User Profile"
-        width={200}
-        height={200}
-      />
-      <br />
-      Full Name : {user?.firstName} {user?.lastName} <br />
-      Email : {user?.emailAddresses[0].emailAddress} <br />
+    <div className="min-h-screen bg-[#FAFAFA] p-6">
+      <TopBar />
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <QuestionCard />
+        <MeetingCard />
+      </div>
+
+      <ActivityFeed />
     </div>
   );
 }

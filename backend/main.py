@@ -2,11 +2,12 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api.routes import user, webhook
+from app.api.routes import user, webhook, github
 from app.config.config import settings
-
+from app.config.gemini import Gemini
 
 app = FastAPI()
+
 ALLOWED_ORIGINS = settings.ALLOWED_ORIGINS
 origins = [ALLOWED_ORIGINS]
 
@@ -20,6 +21,7 @@ app.add_middleware(
 
 app.include_router(user.router, prefix=settings.API_V1_STR)
 app.include_router(webhook.router, prefix=settings.API_V1_STR)
+app.include_router(github.router, prefix=settings.API_V1_STR)
 print("routes registered")
 
 

@@ -27,9 +27,10 @@ import { Button } from "./ui/button";
 export function AppSidebar() {
   const {
     projects,
-
+    selectedProjectId,
     error,
     isLoading,
+    setSelectedProjectId,
   } = useProject();
   const { open } = useSidebar();
   const items = [
@@ -99,17 +100,18 @@ export function AppSidebar() {
           <SidebarGroupLabel>Your Projects</SidebarGroupLabel>
           <SidebarMenu>
             {isLoading && <div>Loading...</div>}
-            {error && <div>Error: {error.message}</div>}
+            {/* {error && <div>Error: {error.message}</div>} */}
             {projects?.map((project) => (
               <SidebarMenuItem key={project.name}>
                 <SidebarMenuButton asChild>
-                  <div>
+                  <div onClick={() => setSelectedProjectId(project.id!)}>
                     <div
                       className={cn(
                         "rounded-sm border size-6 flex items-center justify-center text-sm bg-white text-primary",
                         {
-                          "bg-primary text-white": true,
-                        }
+                          "bg-primary text-white":
+                            selectedProjectId === project.id,
+                        },
                       )}
                     >
                       {project.name[0].toUpperCase()}

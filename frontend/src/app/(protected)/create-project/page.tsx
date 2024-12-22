@@ -24,36 +24,52 @@ export default function CreateProjectPage() {
 
   const createProject = useMutation({
     mutationFn: (reqData: ProjectType) => createProjects(reqData),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["projects"],
-      });
+    onMutate: async (newProject) => {
       toast.success("Project Created Successfully");
+      await queryClient.cancelQueries({ queryKey: ["projects"] });
+
+      const oldProjects = queryClient.getQueryData<ProjectType[]>(["projects"]);
+      queryClient.setQueryData<ProjectType[]>(["projects"], (oldData) => {
+        if (!oldData) return [];
+        return [...oldData, { ...newProject, id: oldData.length + 1 }];
+      });
+      return { oldProjects };
+    },
+    onSuccess: () => {
       setFormData({
         github_url: "",
         name: "",
         description: "",
       });
     },
-    onError: () => {
+    onError: (err, newProject, context) => {
+      queryClient.setQueryData<ProjectType[]>(
+        ["projects"],
+        context?.oldProjects,
+      );
       toast.error("Error creating project");
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["projects"],
+      });
     },
   });
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const validation = Project.safeParse(formData);
     if (!validation.success) {
       toast.error(validation.error.errors[0].message);
       return;
     }
-    createProject.mutate(formData);
+    await createProject.mutateAsync(formData);
   };
 
   return (

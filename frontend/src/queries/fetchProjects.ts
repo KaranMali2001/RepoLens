@@ -17,7 +17,7 @@ export async function fetchProjects() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     return data.data;

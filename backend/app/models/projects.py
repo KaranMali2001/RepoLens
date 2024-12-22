@@ -16,3 +16,4 @@ class Projects(Base):
     description = Column(String)
     last_synced = Column(DateTime, nullable=True)
     user = relationship("Users", back_populates="projects")
+    github_commits = relationship("Github_Commits", back_populates="project")

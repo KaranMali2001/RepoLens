@@ -3,6 +3,7 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import JWTError, jwt
 import requests
 import os
+from functools import lru_cache
 
 
 class ClerkTokenVerifier:
