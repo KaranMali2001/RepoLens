@@ -7,6 +7,7 @@ from fastapi.requests import Request
 from datetime import datetime
 from app.config.database import get_session
 from sqlalchemy.ext.asyncio import AsyncSession
+from functools import lru_cache
 from app.services.project_services import (
     insert_project,
     get_projects_db,
@@ -40,6 +41,7 @@ async def create_project(
         )
 
 
+@lru_cache(maxsize=20)
 @router.get("/get-projects")
 async def get_projects(
     req: Request,

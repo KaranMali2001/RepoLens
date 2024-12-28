@@ -3,8 +3,9 @@ from app.models.projects import Projects
 from fastapi import HTTPException
 from sqlalchemy.future import select
 from sqlalchemy.ext.asyncio import AsyncSession
-
+from app.helpers.url_exist import github_url_exists
 from app.services.user_services import get_user
+from functools import lru_cache
 
 
 async def insert_project(db: AsyncSession, project_data: dict, clerk_id: str):
@@ -12,6 +13,10 @@ async def insert_project(db: AsyncSession, project_data: dict, clerk_id: str):
         project_data["credits_required"] = 0
         project_data["status"] = "active"
         print("before validation\n", project_data)
+        gitbook_url = project_data.get("gitbook_url")
+        # check if this Url is already in the database
+        res = await github_url_exists(db, gitbook_url)
+
         data = Projects(**project_data)
 
         user = await get_user(db, clerk_id)
@@ -31,6 +36,7 @@ async def insert_project(db: AsyncSession, project_data: dict, clerk_id: str):
         raise HTTPException(status_code=500, detail=f"Error creating project: {str(e)}")
 
 
+@lru_cache(maxsize=20)
 async def get_projects_db(db: AsyncSession, clerk_id: str):
     try:
         result = await db.execute(select(Projects).where(Projects.clerk_id == clerk_id))

@@ -1,22 +1,22 @@
-"use client";
+'use client';
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import useProject from "@/hooks/use-project";
-import { ProjectType } from "@/types";
-import { useAuth } from "@clerk/nextjs";
-import { useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
-import { motion } from "framer-motion";
-import { ExternalLinkIcon, GitlabIcon as GitHubIcon } from "lucide-react";
-import Link from "next/link";
-import { toast } from "sonner";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import useProject from '@/hooks/use-project';
+import { ProjectType } from '@/types';
+import { useAuth } from '@clerk/nextjs';
+import { useQueryClient } from '@tanstack/react-query';
+import axios from 'axios';
+import { motion } from 'framer-motion';
+import { ExternalLinkIcon, GitlabIcon as GitHubIcon } from 'lucide-react';
+import Link from 'next/link';
+import { toast } from 'sonner';
 
 export function TopBar() {
+  const queryClient = useQueryClient();
+  const { getToken } = useAuth();
   const { project, projects, setSelectedProjectId } = useProject();
   if (!projects) return null;
-  const { getToken } = useAuth();
-  const queryClient = useQueryClient();
 
   if (!project) return null;
   return (
@@ -48,21 +48,7 @@ export function TopBar() {
             const token = await getToken();
             const oldProjectId: ProjectType = project;
             try {
-              console.log("inside try");
-              queryClient.setQueryData(["projects", "persist"], () => {
-                const updateProjects = projects.filter(
-                  (p) => p.id !== oldProjectId.id,
-                );
-
-                if (updateProjects[0].id === undefined) {
-                  toast.warning("No projects found");
-                }
-                setSelectedProjectId(
-                  updateProjects.length > 0 ? updateProjects[0].id! : 0,
-                );
-                return updateProjects;
-              });
-              toast.success("Project deleted successfully");
+              console.log('inside try');
 
               await axios.delete(
                 `${process.env.NEXT_PUBLIC_BACKEND_API}users/delete-project`,
@@ -73,16 +59,15 @@ export function TopBar() {
                   },
                 },
               );
-
+              toast.success('Project deleted successfully');
+            } catch (error: unknown) {
+              console.log('error', error);
+              toast.error('Error deleting project');
+            } finally {
               queryClient.invalidateQueries({
-                queryKey: ["projects", "persist"],
+                queryKey: ['projects', 'persist'],
               });
-            } catch (error) {
-              queryClient.setQueryData(["projects", "persist"], () => {
-                setSelectedProjectId(oldProjectId.id!);
-                return [...projects, oldProjectId];
-              });
-              toast.error("Error deleting project");
+              setSelectedProjectId(projects[0].id!);
             }
           }}
           variant="ghost"

@@ -5,6 +5,7 @@ from fastapi.responses import JSONResponse
 from app.models.users import Users
 from sqlalchemy.future import select
 from sqlalchemy.ext.asyncio import AsyncSession
+from functools import lru_cache
 
 
 async def create_user(db: AsyncSession, user_data: dict):
@@ -31,6 +32,7 @@ async def create_user(db: AsyncSession, user_data: dict):
         raise HTTPException(status_code=500, detail=f"Error creating user: {str(e)}")
 
 
+@lru_cache(maxsize=20)
 async def get_user(db: AsyncSession, clerk_id: str):
     try:
         result = await db.execute(select(Users).where(Users.clerk_id == clerk_id))

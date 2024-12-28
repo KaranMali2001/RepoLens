@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import { MonitorIcon, UploadIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardTitle, CardDescription } from "@/components/ui/card";
+import { motion } from 'framer-motion';
+import { MonitorIcon, UploadIcon } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardTitle, CardDescription } from '@/components/ui/card';
 
 export function MeetingCard() {
   return (

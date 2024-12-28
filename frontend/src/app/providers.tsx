@@ -1,10 +1,10 @@
-"use client";
-import { ClerkProvider } from "@clerk/nextjs";
-import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
-import localforage from "localforage";
-import { Toaster } from "sonner";
+'use client';
+import { ClerkProvider } from '@clerk/nextjs';
+import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
+import localforage from 'localforage';
+import { Toaster } from 'sonner';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const queryClient = new QueryClient({
@@ -24,7 +24,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         persister: asyncStoragePersister,
         dehydrateOptions: {
           shouldDehydrateQuery: (query) => {
-            return query.queryKey.includes("persist");
+            return query.queryKey.includes('persist');
           },
         },
       }}

@@ -1,6 +1,6 @@
-import { AppSidebar } from "@/components/app-sidebar";
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { ClerkLoaded, UserButton } from "@clerk/nextjs";
+import { AppSidebar } from '@/components/app-sidebar';
+import { SidebarProvider } from '@/components/ui/sidebar';
+import { ClerkLoaded, UserButton } from '@clerk/nextjs';
 
 type Props = {
   children: React.ReactNode;

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import {
   Sidebar,
   SidebarContent,
@@ -10,20 +10,20 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar";
-import useProject from "@/hooks/use-project";
-import { cn } from "@/lib/utils";
+} from '@/components/ui/sidebar';
+import useProject from '@/hooks/use-project';
+import { cn } from '@/lib/utils';
 import {
   Bot,
   Calendar,
   LayoutDashboard,
   Plus,
   Presentation,
-} from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Button } from "./ui/button";
+} from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { Button } from './ui/button';
 export function AppSidebar() {
   const {
     projects,
@@ -35,23 +35,23 @@ export function AppSidebar() {
   const { open } = useSidebar();
   const items = [
     {
-      title: "Dasboard",
-      url: "/dashboard",
+      title: 'Dasboard',
+      url: '/dashboard',
       icon: LayoutDashboard,
     },
     {
-      title: "Q & A",
-      url: "/qa",
+      title: 'Q & A',
+      url: '/qa',
       icon: Bot,
     },
     {
-      title: "Calendar",
-      url: "#",
+      title: 'Calendar',
+      url: '#',
       icon: Calendar,
     },
     {
-      title: "/Meetings",
-      url: "/meetings",
+      title: '/Meetings',
+      url: '/meetings',
       icon: Presentation,
     },
   ];
@@ -84,7 +84,7 @@ export function AppSidebar() {
                     <Link
                       href={item.url}
                       className={cn({
-                        "bg-primary text-white": pathname === item.url,
+                        'bg-primary text-white': pathname === item.url,
                       })}
                     >
                       <item.icon className="h-4 w-4" />
@@ -100,16 +100,16 @@ export function AppSidebar() {
           <SidebarGroupLabel>Your Projects</SidebarGroupLabel>
           <SidebarMenu>
             {isLoading && <div>Loading...</div>}
-            {/* {error && <div>Error: {error.message}</div>} */}
+            {error && <div>Error: {error.message}</div>}
             {projects?.map((project) => (
               <SidebarMenuItem key={project.name}>
                 <SidebarMenuButton asChild>
                   <div onClick={() => setSelectedProjectId(project.id!)}>
                     <div
                       className={cn(
-                        "rounded-sm border size-6 flex items-center justify-center text-sm bg-white text-primary",
+                        'rounded-sm border size-6 flex items-center justify-center text-sm bg-white text-primary',
                         {
-                          "bg-primary text-white":
+                          'bg-primary text-white':
                             selectedProjectId === project.id,
                         },
                       )}
@@ -122,8 +122,8 @@ export function AppSidebar() {
               </SidebarMenuItem>
             ))}
             <div className=" h-3"></div>
-            <Link href={"/create-project"}>
-              <Button variant={"outline"} className="w-full">
+            <Link href={'/create-project'}>
+              <Button variant={'outline'} className="w-full">
                 <Plus />
                 {open && <div>Create Project </div>}
               </Button>

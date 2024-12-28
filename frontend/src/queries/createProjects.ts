@@ -1,10 +1,10 @@
-"use server";
-import { ProjectType } from "@/types";
-import { auth } from "@clerk/nextjs/server";
-import axios, { AxiosError } from "axios";
+'use server';
+import { ProjectType } from '@/types';
+import { auth } from '@clerk/nextjs/server';
+import axios, { AxiosError } from 'axios';
 
 export async function createProjects(reqData: ProjectType) {
-  console.log("createProjects");
+  console.log('createProjects');
   const { getToken } = await auth();
   const token = await getToken();
   try {
@@ -14,7 +14,7 @@ export async function createProjects(reqData: ProjectType) {
       JSON.stringify(reqData),
       {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
       },
@@ -27,7 +27,7 @@ export async function createProjects(reqData: ProjectType) {
     }
 
     throw new Error(
-      error instanceof Error ? error.message : "An unknown error occurred",
+      error instanceof Error ? error.message : 'An unknown error occurred',
     );
   }
 }

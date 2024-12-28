@@ -1,35 +1,38 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { GitlabIcon as GitHubIcon } from "lucide-react";
-import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { createProjects } from "@/queries/createProjects";
-import { Project } from "@/schemas/ProjectInput";
-import { ProjectType } from "@/types";
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { GitlabIcon as GitHubIcon } from 'lucide-react';
+import { toast } from 'sonner';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { createProjects } from '@/queries/createProjects';
+import { Project } from '@/schemas/ProjectInput';
+import { ProjectType } from '@/types';
 
 export default function CreateProjectPage() {
   const queryClient = useQueryClient();
   const [formData, setFormData] = useState<ProjectType>({
-    github_url: "",
-    name: "",
-    description: "",
+    github_url: '',
+    name: '',
+    description: '',
   });
 
   const createProject = useMutation({
     mutationFn: (reqData: ProjectType) => createProjects(reqData),
     onMutate: async (newProject) => {
-      toast.success("Project Created Successfully");
-      await queryClient.cancelQueries({ queryKey: ["projects"] });
+      toast.success('Project Created Successfully');
+      await queryClient.cancelQueries({ queryKey: ['projects', 'persist'] });
 
-      const oldProjects = queryClient.getQueryData<ProjectType[]>(["projects"]);
-      queryClient.setQueryData<ProjectType[]>(["projects"], (oldData) => {
+      const oldProjects = queryClient.getQueryData<ProjectType[]>([
+        'projects',
+        'persist',
+      ]);
+      queryClient.setQueryData<ProjectType[]>(['projects'], (oldData) => {
         if (!oldData) return [];
         return [...oldData, { ...newProject, id: oldData.length + 1 }];
       });
@@ -37,21 +40,21 @@ export default function CreateProjectPage() {
     },
     onSuccess: () => {
       setFormData({
-        github_url: "",
-        name: "",
-        description: "",
+        github_url: '',
+        name: '',
+        description: '',
       });
     },
     onError: (err, newProject, context) => {
       queryClient.setQueryData<ProjectType[]>(
-        ["projects"],
+        ['projects', 'persist'],
         context?.oldProjects,
       );
-      toast.error("Error creating project");
+      toast.error('Error creating project');
     },
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: ["projects"],
+        queryKey: ['projects', 'persist'],
       });
     },
   });
@@ -140,8 +143,8 @@ export default function CreateProjectPage() {
                   disabled={createProject.isPending}
                 >
                   {createProject.isPending
-                    ? "Creating Project..."
-                    : "Create Project"}
+                    ? 'Creating Project...'
+                    : 'Create Project'}
                 </Button>
               </CardContent>
             </form>

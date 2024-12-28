@@ -1,10 +1,10 @@
-"use server";
-import { ProjectType } from "@/types";
-import { auth } from "@clerk/nextjs/server";
-import axios from "axios";
+'use server';
+import { ProjectType } from '@/types';
+import { auth } from '@clerk/nextjs/server';
+import axios from 'axios';
 
 export async function fetchProjects() {
-  console.log("fetchProjects");
+  console.log('fetchProjects');
   const { getToken } = await auth();
   const token = await getToken();
 
@@ -14,7 +14,7 @@ export async function fetchProjects() {
 
       {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
       },
@@ -22,7 +22,7 @@ export async function fetchProjects() {
 
     return data.data;
   } catch (error) {
-    console.error("error", error);
+    console.error('error', error);
     throw error;
   }
 }

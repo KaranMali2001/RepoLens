@@ -21,13 +21,15 @@ class GithubService:
                 github_commits = repo.get_commits().get_page(0)
 
                 commit_data = []
-                for c in github_commits[:1]:
+                for c in github_commits[:5]:
+
                     commit_data.append(
                         {
                             "commit_hash": c.sha,
                             "commit_author": c.commit.author.name,
                             "commit_message": c.commit.message,
-                            "commit_date": c.commit.author.date,
+                            "commit_date": c.commit.author.date.replace(tzinfo=None),
+                            "commit_summary": {},
                             "commit_avatar_url": c.author.avatar_url,
                         }
                     )

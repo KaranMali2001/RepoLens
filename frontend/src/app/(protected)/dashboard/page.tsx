@@ -1,7 +1,7 @@
-import ActivityFeed from "@/components/dashboard/activity-feed";
-import { MeetingCard } from "@/components/dashboard/meeting-card";
-import { QuestionCard } from "@/components/dashboard/question-card";
-import { TopBar } from "@/components/dashboard/top-bar";
+import ActivityFeed from '@/components/dashboard/activity-feed';
+import { MeetingCard } from '@/components/dashboard/meeting-card';
+import { QuestionCard } from '@/components/dashboard/question-card';
+import { TopBar } from '@/components/dashboard/top-bar';
 
 export default function DashboardPage() {
   return (
@@ -12,7 +12,7 @@ export default function DashboardPage() {
         <QuestionCard />
         <MeetingCard />
       </div>
-
+      {/* Optimize This even Though Commits are same , it sends req to backend when Project is changed */}
       <ActivityFeed />
     </div>
   );
