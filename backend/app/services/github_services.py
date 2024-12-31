@@ -40,3 +40,15 @@ class GithubService:
         except Exception as e:
             print("Error getting commits:", e)
             return None
+
+    def get_branch(self, github_url: str):
+        try:
+            if "github.com" in github_url:
+                url = github_url.split("github.com/")[1]
+                repo = self.g.get_repo(url)
+                branch = repo.get_branches()[0]
+                print("branch name is", branch.name)
+                return branch.name
+        except Exception as e:
+            print("Error getting branch:", e)
+            return None

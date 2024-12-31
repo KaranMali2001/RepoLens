@@ -12,7 +12,7 @@ export function MeetingCard() {
       animate={{ x: 0, opacity: 1 }}
       transition={{ delay: 0.2 }}
     >
-      <Card className="h-full flex flex-col items-center justify-center text-center p-8">
+      <Card className="h-full flex flex-col items-center justify-center text-center p-8 ">
         <MonitorIcon className="h-16 w-16 mb-6 text-gray-400" />
         <CardTitle className="mb-2">Create a new meeting</CardTitle>
         <CardDescription className="mb-6">

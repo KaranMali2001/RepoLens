@@ -64,6 +64,7 @@ async def get_commits(
         # TODO: Optimize this code check the hash with given url in Db that they are summerized or not
 
         if len(unprocessed_commits) == 0:
+            print(len(unprocessed_commits))
             # check condition for empty summery in db ,empty summary shoud not be saved in db
             #
             res = await db.execute(
@@ -121,7 +122,9 @@ async def get_commits(
                 db_commit = await db.execute(
                     update(Github_Commits)
                     .where(Github_Commits.commit_hash == commit["commit_hash"])
-                    .values(commit_summary=json.dumps(commit["changes"]),)
+                    .values(
+                        commit_summary=json.dumps(commit["changes"]),
+                    )
                 )
 
                 await db.commit()

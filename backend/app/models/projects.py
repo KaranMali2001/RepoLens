@@ -17,3 +17,8 @@ class Projects(Base):
     last_synced = Column(DateTime, nullable=True)
     user = relationship("Users", back_populates="projects")
     github_commits = relationship("Github_Commits", back_populates="project")
+    repo_embeddings = relationship(  # Changed from repositories to repo_embeddings
+        "Repo_Embeddings",
+        secondary="repo_embeddings_projects",
+        back_populates="projects",
+    )

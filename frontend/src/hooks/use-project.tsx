@@ -12,7 +12,7 @@ export default function useProject() {
   } = useQuery<ProjectType[]>({
     queryKey: ['projects', 'persist'],
     queryFn: fetchProjects,
-    staleTime: 60 * 60 * 1000,
+    staleTime: Infinity,
   });
   const [selectedProjectId, setSelectedProjectId] = useLocalStorage(
     'project 1',

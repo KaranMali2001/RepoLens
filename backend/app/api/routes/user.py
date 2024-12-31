@@ -1,6 +1,6 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
 from app.services.clerk_services import ClerkTokenVerifier
-
+from app.helpers.index_repo import index_repo
 
 from fastapi.responses import JSONResponse
 from fastapi.requests import Request
@@ -27,6 +27,7 @@ async def create_project(
     body = await request.json()
     print("inside create project", body)
     clerk_id = token_data["sub"]
+    gitbook_url = project_data.get("gitbook_url")
     try:
 
         res = await insert_project(db, body, clerk_id)
@@ -34,6 +35,7 @@ async def create_project(
             return JSONResponse(
                 status_code=200, content={"message": "Project created successfully"}
             )
+        BackgroundTasks.add_task(index_repo, res, gitbook_url, db)
     except Exception as e:
         print("Error creating project:", e)
         return JSONResponse(

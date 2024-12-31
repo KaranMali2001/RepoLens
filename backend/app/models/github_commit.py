@@ -15,7 +15,7 @@ from sqlalchemy.orm import relationship
 class Github_Commits(Base):
     __tablename__ = "github_commits"
     id = Column(Integer, autoincrement=True, primary_key=True)
-    project_id = Column(Integer, ForeignKey("projects.id"), nullable=False)
+    project_id = Column(Integer, ForeignKey("projects.id"), nullable=True)
     github_url = Column(String, nullable=False)
     commit_hash = Column(String, nullable=False)
     commit_author = Column(String, nullable=False)

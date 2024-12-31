@@ -8,7 +8,13 @@ import { useAuth } from '@clerk/nextjs';
 import { useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { motion } from 'framer-motion';
-import { ExternalLinkIcon, GitlabIcon as GitHubIcon } from 'lucide-react';
+import {
+  Delete,
+  DeleteIcon,
+  ExternalLinkIcon,
+  GitlabIcon as GitHubIcon,
+  LucideTrash2,
+} from 'lucide-react';
 import Link from 'next/link';
 import { toast } from 'sonner';
 
@@ -23,26 +29,25 @@ export function TopBar() {
     <motion.div
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="flex items-center justify-between mb-8"
+      className="flex items-center justify-between mb-8 "
     >
       <Link rel="noopener noreferrer" target="_blank" href={project.github_url}>
         <Button
+          effect="shineHover"
           rel="noopener noreferrer"
-          className="bg-purple-600 hover:bg-purple-700 text-white flex items-center gap-2"
+          className=" flex items-center gap-2 bg-primary text-foreground"
         >
           <GitHubIcon className="h-4 w-4" />
           {project.github_url}
           <ExternalLinkIcon className="h-4 w-4" />
         </Button>
       </Link>
-      <div className="flex items-center gap-4">
-        <Button variant="ghost" className="flex items-center gap-2">
-          <Avatar className="h-6 w-6">
-            <AvatarImage src="/placeholder.svg?height=24&width=24" />
-            <AvatarFallback>U</AvatarFallback>
-          </Avatar>
-          Invite a team member!
-        </Button>
+      <div className="flex items-center gap-4 ">
+        <div className="bg-black text-white">
+          <Button variant="ghost" className="flex items-center gap-2">
+            Invite a team member!
+          </Button>
+        </div>
         <Button
           onClick={async () => {
             const token = await getToken();
@@ -70,7 +75,10 @@ export function TopBar() {
               setSelectedProjectId(projects[0].id!);
             }
           }}
-          variant="ghost"
+          variant="destructive"
+          effect="expandIcon"
+          icon={LucideTrash2}
+          iconPlacement="right"
         >
           Delete Project
         </Button>

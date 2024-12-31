@@ -27,8 +27,9 @@ async def insert_project(db: AsyncSession, project_data: dict, clerk_id: str):
 
         res = user.projects.append(data)
         await db.commit()
+        await db.refresh(user)
 
-        return True
+        return data.id
     except Exception as e:
         await db.rollback()
         print("Error creating new project:", e)
@@ -36,7 +37,6 @@ async def insert_project(db: AsyncSession, project_data: dict, clerk_id: str):
         raise HTTPException(status_code=500, detail=f"Error creating project: {str(e)}")
 
 
-@lru_cache(maxsize=20)
 async def get_projects_db(db: AsyncSession, clerk_id: str):
     try:
         result = await db.execute(select(Projects).where(Projects.clerk_id == clerk_id))

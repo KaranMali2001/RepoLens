@@ -2,12 +2,16 @@ from github import Github
 import os
 import datetime
 from functools import lru_cache
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 class GithubAuth:
     @lru_cache(maxsize=10)
     def __init__(self):
         PAT = os.environ.get("GITHUB_PAT")
+
         if PAT is None:
             raise ValueError("GITHUB_PAT environment variable is not set")
         try:
