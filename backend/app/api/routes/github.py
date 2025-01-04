@@ -52,7 +52,7 @@ async def get_commits(
         start_time = time.time()
 
         commit_data = await asyncio.get_event_loop().run_in_executor(
-            executor, github.get_latest_commits, github_url
+            executor, github.get_latest_commits, github_url,6
         )
 
         commit_hash = [c["commit_hash"] for c in commit_data]

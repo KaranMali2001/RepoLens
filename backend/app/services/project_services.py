@@ -14,9 +14,9 @@ async def insert_project(db: AsyncSession, project_data: dict, clerk_id: str):
         project_data["status"] = "active"
         print("before validation\n", project_data)
         gitbook_url = project_data.get("gitbook_url")
-        # check if this Url is already in the database
-        res = await github_url_exists(db, gitbook_url)
 
+        
+        
         data = Projects(**project_data)
 
         user = await get_user(db, clerk_id)

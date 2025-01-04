@@ -9,7 +9,7 @@ class GithubService:
         github_auth = GithubAuth()
         self.g: Github = github_auth()
 
-    def get_latest_commits(self, github_url: str):
+    def get_latest_commits(self, github_url: str,page_size:int=5):
         print("inside get commits", self.g, github_url)
 
         try:
@@ -21,7 +21,7 @@ class GithubService:
                 github_commits = repo.get_commits().get_page(0)
 
                 commit_data = []
-                for c in github_commits[:5]:
+                for c in github_commits[:page_size]:
 
                     commit_data.append(
                         {

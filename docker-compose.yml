@@ -1,0 +1,37 @@
+services:
+  next-app:
+    container_name: next-app
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+
+    env_file:
+      - ./frontend/.env.local
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
+    restart: always
+    ports:
+      - 3000:3000
+    networks:
+      - test_network
+  fastapi:
+    container_name: fastapi
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      - PYTHONPATH=/app
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend/app:/app/app
+    restart: always
+    ports:
+      - 8000:8000
+    networks:
+      - test_network
+
+networks:
+  test_network:
+    driver: bridge
