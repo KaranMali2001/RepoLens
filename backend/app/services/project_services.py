@@ -15,8 +15,6 @@ async def insert_project(db: AsyncSession, project_data: dict, clerk_id: str):
         print("before validation\n", project_data)
         gitbook_url = project_data.get("gitbook_url")
 
-        
-        
         data = Projects(**project_data)
 
         user = await get_user(db, clerk_id)

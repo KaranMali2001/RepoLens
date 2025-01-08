@@ -84,7 +84,7 @@ async def summary_code(doc: Document):
         trimmed_doc = doc.page_content[0:30000]
         print("wating for response .......... in summary code")
         res = await model.generate_content_async(
-            SUMMARY_CODE_PROMPT.format(doc=doc.metadata['source'], code=trimmed_doc),
+            SUMMARY_CODE_PROMPT.format(doc=doc.metadata["source"], code=trimmed_doc),
             generation_config={
                 "temperature": 0.2,
             },
@@ -94,10 +94,10 @@ async def summary_code(doc: Document):
             raise Exception("No response from Gemini")
         summary = json.loads(res.text)
         print("parsed data", summary)
-        embedding = await generateEmbeddings(summary['summary'])
+        embedding = await generateEmbeddings(summary["summary"])
         # save summary , embedding and source code to db
         # just return the ids of embeddings
-        
+
         return {
             "summary": summary,
             "source_code": json.dumps(doc.page_content),

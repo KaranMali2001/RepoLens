@@ -21,7 +21,7 @@ async def summarize_commit_diff(commit_hash: str, github_url: str):
                     "Accept": "application/vnd.github.v3.diff",
                     "Authorization": f"token {os.environ.get('GITHUB_PAT')}",
                 },
-        )
+            )
             print("res from github is ", res)
             loop = asyncio.get_event_loop()
             formatted_diff = await loop.run_in_executor(
@@ -36,7 +36,8 @@ async def summarize_commit_diff(commit_hash: str, github_url: str):
             return summery
     except Exception as e:
         print("Error getting commit diff:", e)
-        raise e    
+        raise e
+
 
 async def get_changed_files_path(commit_hash: str, github_url: str):
     try:
@@ -51,16 +52,16 @@ async def get_changed_files_path(commit_hash: str, github_url: str):
                     "Accept": "application/vnd.github.v3.diff",
                     "Authorization": f"token {os.environ.get('GITHUB_PAT')}",
                 },
-        )
-        
+            )
+
         changed_files = []
         diff_text = res.text
-        
+
         # Split diff into sections by diff headers
         diff_sections = diff_text.split("diff --git ")
-        
+
         for section in diff_sections[1:]:  # Skip first empty section
-            
+
             file_line = section.split("\n")[0]
             _, file_path = file_line.split(" b/", 1)
             changed_files.append(file_path)
@@ -69,4 +70,3 @@ async def get_changed_files_path(commit_hash: str, github_url: str):
     except Exception as e:
         print("Error getting commit diff file path", e)
         raise ValueError("Error getting commit diff file path ")
-

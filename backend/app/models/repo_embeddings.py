@@ -20,7 +20,7 @@ class Repo_Embeddings(Base):
     source_code = Column(String)
     file_name = Column(String)
     summary = Column(String)
-    last_synced=Column(DateTime, nullable=True)
+    last_synced = Column(DateTime, nullable=True)
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, server_default=func.now())
     projects = relationship(

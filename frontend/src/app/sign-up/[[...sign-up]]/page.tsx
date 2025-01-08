@@ -134,69 +134,6 @@ export default function SignUpComponent() {
             </div>
           </div>
 
-          {/* <div className="space-y-1">
-            <div className="flex justify-between items-center">
-              <span className="text-xs text-gray-500">Password strength</span>
-              <span
-                className="text-xs font-medium"
-                style={{ color: `hsl(${passwordStrength}, 100%, 30%)` }}
-              >
-                {passwordStrength <= 25
-                  ? "Weak"
-                  : passwordStrength <= 50
-                  ? "Fair"
-                  : passwordStrength <= 75
-                  ? "Good"
-                  : "Strong"}
-              </span>
-            </div>
-            <Progress
-              value={passwordStrength}
-              className="h-1"
-              style={{
-                background: `linear-gradient(to right, red, yellow, green)`,
-              }}
-            />
-          </div> */}
-
-          {/* <div className="space-y-2">
-            <p className="text-sm text-gray-600">Password must contain:</p>
-            <ul className="text-xs text-gray-500 space-y-1">
-              <li className="flex items-center">
-                {password.length > 8 ? (
-                  <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                ) : (
-                  <XCircle className="w-4 h-4 text-red-500 mr-2" />
-                )}
-                At least 8 characters
-              </li>
-              <li className="flex items-center">
-                {password.match(/[A-Z]/) && password.match(/[a-z]/) ? (
-                  <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                ) : (
-                  <XCircle className="w-4 h-4 text-red-500 mr-2" />
-                )}
-                Upper and lowercase letters
-              </li>
-              <li className="flex items-center">
-                {password.match(/\d/) ? (
-                  <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                ) : (
-                  <XCircle className="w-4 h-4 text-red-500 mr-2" />
-                )}
-                At least one number
-              </li>
-              <li className="flex items-center">
-                {password.match(/[^a-zA-Z\d]/) ? (
-                  <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                ) : (
-                  <XCircle className="w-4 h-4 text-red-500 mr-2" />
-                )}
-                At least one special character
-              </li>
-            </ul>
-          </div> */}
-
           <Button type="submit" disabled={isLoading} className="w-full">
             {isLoading ? 'Signing up...' : 'Sign Up'}
           </Button>

@@ -9,7 +9,7 @@ class GithubService:
         github_auth = GithubAuth()
         self.g: Github = github_auth()
 
-    def get_latest_commits(self, github_url: str,page_size:int=5):
+    def get_latest_commits(self, github_url: str, page_size: int = 5):
         print("inside get commits", self.g, github_url)
 
         try:

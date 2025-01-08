@@ -25,9 +25,7 @@ export default function SSOCallback() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.5 }}
-        >
-          Welcome To Reeler Ai
-        </motion.h2>
+        ></motion.h2>
         <div className="flex justify-center mb-6">
           <LoadingSpinner />
         </div>
