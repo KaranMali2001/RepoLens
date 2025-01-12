@@ -1,6 +1,5 @@
 'use client';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import useProject from '@/hooks/use-project';
 import { ProjectType } from '@/types';
@@ -9,8 +8,6 @@ import { useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import {
-  Delete,
-  DeleteIcon,
   ExternalLinkIcon,
   GitlabIcon as GitHubIcon,
   LucideTrash2,

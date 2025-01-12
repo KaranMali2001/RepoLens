@@ -1,7 +1,6 @@
 import sys
 import os
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
 
 from app.services.langChain_services import load_github_repo
 import asyncio
@@ -53,6 +52,3 @@ async def index_repo(project_id: int, repo_url: str, db: AsyncSession):
         result = await asyncio.gather(*task)
         # update the last synced date in db & create the embbedings in db
         # add entries to repo_embeeding_project table
-
-
-asyncio.run(index_repo(repo_url="https://github.com/KaranMali2001/algoForshuffling"))
