@@ -10,6 +10,7 @@ from functools import lru_cache
 
 async def insert_project(db: AsyncSession, project_data: dict, clerk_id: str):
     try:
+        print("project data inside",project_data)
         project_data["credits_required"] = 0
         project_data["status"] = "active"
         print("before validation\n", project_data)

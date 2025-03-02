@@ -25,12 +25,13 @@ async def create_project(
     token_data: dict = Depends(verifier.verify_token),
 ):
     body = await request.json()
-    print("inside create project", body)
+    print("inside create project..................", body)
     clerk_id = token_data["sub"]
-    gitbook_url: str = project_data.get("gitbook_url")
+    gitbook_url: str = body.get("gitbook_url")
     try:
 
         res: int = await insert_project(db, body, clerk_id)
+    
         if res is True:
             BackgroundTasks.add_task(index_repo, res, gitbook_url, db)
             return JSONResponse(

@@ -19,7 +19,7 @@ github = GithubService()
 
 
 async def index_repo(project_id: int, repo_url: str, db: AsyncSession):
-    # get latest synced date from db
+    print("inside INDEX REPO")
     latest_synced = await repo_embeddings_exists(db, repo_url)
     if latest_synced is not None:
         print("Repo already exist")

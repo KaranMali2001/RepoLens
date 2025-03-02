@@ -6,20 +6,29 @@ import { useLocalStorage } from 'usehooks-ts';
 
 export default function useProject() {
   const {
-    data: projects,
+    data: projectsResponse,
     error,
     isLoading,
-  } = useQuery<ProjectType[]>({
+  } = useQuery<{ data: ProjectType[] } | ProjectType[]>({
     queryKey: ['projects', 'persist'],
     queryFn: fetchProjects,
     staleTime: Infinity,
   });
+
   const [selectedProjectId, setSelectedProjectId] = useLocalStorage(
     'project 1',
     0,
   );
-  const project = projects?.find((project) => project.id === selectedProjectId);
-  console.log('data from use Project hoojk', projects); //data.data
+
+  // Handle both nested and non-nested responses
+  const projects = Array.isArray(projectsResponse)
+    ? projectsResponse
+    : projectsResponse?.data;
+
+  let project: ProjectType | undefined;
+  if (Array.isArray(projects)) {
+    project = projects.find((project) => project.id === selectedProjectId);
+  }
 
   return {
     selectedProjectId,

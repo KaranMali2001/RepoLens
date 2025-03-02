@@ -36,6 +36,7 @@ export default function SignIn() {
             setError('Unable to proceed with authentication');
             return;
           }
+
           if (firstFactor.strategy === 'password') {
             setStrategy('password');
           } else if (firstFactor.strategy === 'email_code') {

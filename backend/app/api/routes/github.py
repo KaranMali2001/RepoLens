@@ -138,7 +138,7 @@ async def get_commits(
             .limit(5)
         )
         commits = res.scalars().all()
-
+        print("COMMISTS",commits)
         data = [
             {
                 **CommitResponse.from_orm(commit).dict(),
